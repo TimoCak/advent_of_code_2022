@@ -2,7 +2,9 @@ use crate::day01;
 
 
 pub fn analyze_data() {
-    println!("{}", calc_total_points(save_my_shapes_in_vec(), save_opponent_shapes_in_vec()));
+    println!("Part 1: {}", calc_total_points(save_my_shapes_in_vec(), save_opponent_shapes_in_vec()));
+    println!("Part 2: {}", calc_total_points(save_new_my_shape_vec(save_my_shapes_in_vec()
+                                    , save_opponent_shapes_in_vec()), save_opponent_shapes_in_vec()));
 }
 
 fn determine_winning_points_per_round (opponent_shape: String, my_shape: String) -> u32 {
@@ -37,6 +39,58 @@ fn determine_winning_points_per_round (opponent_shape: String, my_shape: String)
     }
     0
 }
+
+
+fn determine_outcome_part02(opponent_shape: String, my_shape: String) -> String {
+    if opponent_shape == "A" && my_shape == "Y"  {
+        return String::from("X");
+    }
+    if opponent_shape == "A" && my_shape == "Z" {
+        return String::from("Y");
+    }
+    if opponent_shape == "B" && my_shape == "X" {
+        return String::from("X");
+    }
+    if opponent_shape == "B" && my_shape == "Z"  {
+        return String::from("Z");
+    }
+    if opponent_shape == "C" && my_shape == "X"  {
+        return String::from("Y");
+    }
+    if opponent_shape == "C" && my_shape == "Y"  {
+        return String::from("Z"); 
+    }
+    if opponent_shape == "A" && my_shape== "X" {
+        return String::from("Z");
+    }
+    if opponent_shape == "B" && my_shape== "Y" {
+        return String::from("Y");
+    }
+    if opponent_shape == "C" && my_shape== "Z" {
+        return String::from("X");
+    }
+    String::new()
+}
+
+fn save_new_my_shape_vec(vec_my_shape: Vec<String>,vec_opponent_shape: Vec<String>) -> Vec<String> {
+    let mut my_shape_vec: Vec<String> = Vec::new();
+
+    for i in 0..vec_my_shape.len() {
+        my_shape_vec.push(determine_outcome_part02(
+        match vec_opponent_shape.get(i) {
+            Some(value) => value.to_string(),
+            None => String::from("_"),
+         },
+         match vec_my_shape.get(i) {
+            Some(value) => value.to_string(),
+            None => String::from("_"),
+         }));
+    }
+
+    my_shape_vec
+
+}
+
 
 fn save_my_shapes_in_vec() -> Vec<String> {
     let text = match day01::get_file("day02.txt") {
@@ -90,3 +144,4 @@ fn calc_total_points(vec_my_shape: Vec<String>, vec_opponent_shape: Vec<String>)
     }
     sum
 }
+
