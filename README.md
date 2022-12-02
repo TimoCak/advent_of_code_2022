@@ -1,3 +1,3 @@
-# advent_to_code 2022
+# advent_of_code_2022
 
 My collection of solutions
