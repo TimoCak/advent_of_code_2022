@@ -2,10 +2,10 @@ use std::fs::File;
 use std::io;
 use std::io::Read;
 
-pub fn get_file() -> Result<String, io::Error> {
+pub fn get_file(path :&str) -> Result<String, io::Error> {
     let mut text = String::new();
 
-    File::open("day01.txt")?.read_to_string(&mut text)?;
+    File::open(path)?.read_to_string(&mut text)?;
 
     Ok(text)
 }
@@ -43,7 +43,7 @@ pub fn search_for_max(v: &mut Vec<u32>) -> Option<&u32> {
 }
 
 pub fn analyze_data() {
-    let text = match get_file() {
+    let text = match get_file("day01.txt") {
         Ok(file) => file,
         Err(e) => e.to_string(),
     };
